@@ -1,13 +1,45 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<UnsceneTravelApp.Models.Activities>
 @{
 }
 <h1> Activities</h1>
 <p>
     <a asp-controller="Activities" asp-action="Add">Add Activity</a>
 </p>
+<p>
+    <a asp-controller="Activities" asp-action="Delete">Delete Activity</a>
+</p>
 
-<p>No Activities yet!</p>
-
-
+@if (Model.Count == 0)
+{
+    <p>No Activities yet!</p>
+}
+else
+{
+    <table class="table">
+        <tr>
+            @*<th>
+                Id
+            </th>*@
+            <th>
+                Name
+            </th>
+            <th>
+                Location
+            </th>
+            <th>
+                Description
+            </th>
+       
+        </tr>
+        @foreach (var activities in Model)
+        {
+            <tr>
+                @*<td>@activities.Id</td>*@
+                <td>@activities.Name</td>
+                <td>@activities.Location</td>
+                <td>@activities.Description</td>
+             
+            </tr>
+        }
+    </table>
+}
