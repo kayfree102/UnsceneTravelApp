@@ -15,11 +15,15 @@ namespace UnsceneTravelApp.ViewModels
     [Required(ErrorMessage = "Description required")]
     public string Description { get; set; }
 
-    public AddActivitiesViewModel(string name, string location, string description)
+    [Required(ErrorMessage = "Add URL map location here")]
+    public string UrlLocation { get; set; }
+
+        public AddActivitiesViewModel(string name, string location, string description, string urlLocation)
     {
         Name = name;
         Location = location;
         Description = description;
+        UrlLocation = urlLocation;
 
     }
     public AddActivitiesViewModel() { }

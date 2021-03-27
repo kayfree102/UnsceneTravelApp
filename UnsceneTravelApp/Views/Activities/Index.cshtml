@@ -18,8 +18,8 @@ else
     <table class="table">
         <tr>
             @*<th>
-                Id
-            </th>*@
+            Id
+        </th>*@
             <th>
                 Name
             </th>
@@ -29,7 +29,10 @@ else
             <th>
                 Description
             </th>
-       
+            <th>
+                URL Map Location
+            </th>
+
         </tr>
         @foreach (var activities in Model)
         {
@@ -38,6 +41,7 @@ else
                 <td>@activities.Name</td>
                 <td>@activities.Location</td>
                 <td>@activities.Description</td>
+                <td>@activities.UrlLocation</td>
              
             </tr>
         }

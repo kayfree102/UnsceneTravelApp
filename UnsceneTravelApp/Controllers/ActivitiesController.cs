@@ -43,7 +43,8 @@ namespace UnsceneTravelApp.Controllers
                 {
                     Name = addActivitiesViewModel.Name,
                     Location = addActivitiesViewModel.Location,
-                    Description = addActivitiesViewModel.Description
+                    Description = addActivitiesViewModel.Description,
+                    UrlLocation = addActivitiesViewModel.UrlLocation
                 };
 
                 context.Activities.Add(newActivities);
