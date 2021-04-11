@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UnsceneTravelApp.Data;
@@ -13,20 +15,26 @@ namespace UnsceneTravelApp.Controllers
     public class ActivitiesController : Controller
     {
         private ActivitiesDbContext context;
+        private IAuthorizationService authorizationService;
+        private UserManager<IdentityUser> userManager;
 
-        public ActivitiesController(ActivitiesDbContext dbContext)
+        public ActivitiesController(ActivitiesDbContext dbContext, IAuthorizationService authorizationService, UserManager<IdentityUser> userManager) : base()
         {
             context = dbContext;
+            this.authorizationService = authorizationService;
+            this.userManager = userManager;
         }
 
         // GET: /<controller>/
         public IActionResult Index()
         {
+
             List<Activities> activities = context.Activities.ToList();
+                
 
             return View(activities);
         }
-
+        [Authorize]
         public IActionResult Add()
         {
             AddActivitiesViewModel addActivitiesViewModel = new AddActivitiesViewModel();
@@ -38,13 +46,15 @@ namespace UnsceneTravelApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                var currentUserId = userManager.GetUserId(User);
                 Activities newActivities = new Activities
 
                 {
                     Name = addActivitiesViewModel.Name,
                     Location = addActivitiesViewModel.Location,
                     Description = addActivitiesViewModel.Description,
-                    UrlLocation = addActivitiesViewModel.UrlLocation
+                    UrlLocation = addActivitiesViewModel.UrlLocation,
+                    UserId = currentUserId
                 };
 
                 context.Activities.Add(newActivities);
@@ -54,10 +64,13 @@ namespace UnsceneTravelApp.Controllers
             }
             return View(addActivitiesViewModel);
         }
-
+        [Authorize]
         public IActionResult Delete()
         {
-            ViewBag.activities = context.Activities.ToList();
+            var currentUserId = userManager.GetUserId(User);
+            ViewBag.activities = context.Activities
+                .Where(e => e.UserId == currentUserId)
+                .ToList();
 
             return View();
         }
@@ -65,9 +78,10 @@ namespace UnsceneTravelApp.Controllers
         [HttpPost]
         public IActionResult Delete(int[] activitiesIds)
         { 
-            foreach (int activitiesId in activitiesIds)
+            foreach (int userId in activitiesIds)
         {
-            Activities theActivity = context.Activities.Find(activitiesId);
+                var currentUserId = userManager.GetUserId(User);
+                Activities theActivity = context.Activities.Find(userId);
             context.Activities.Remove(theActivity);
         }
             context.SaveChanges();
