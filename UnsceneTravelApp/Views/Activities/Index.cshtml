@@ -34,16 +34,17 @@ else
             </th>
 
         </tr>
-        @foreach (var activities in Model)
+        @foreach (Activities activities in Model)
         {
-            <tr>
-                @*<td>@activities.Id</td>*@
-                <td>@activities.Name</td>
-                <td>@activities.Location</td>
-                <td>@activities.Description</td>
-                <td>@activities.UrlLocation</td>
-             
-            </tr>
+    <tr>
+        @*<td>@activities.Id</td>*@
+        <td><a asp-controller="Activities" asp-action="Detail" asp-route-id="@activities.Id">@activities.Name</a></td>
+       @* <td>@activities.Name</td> *@
+        <td>@activities.Location</td>
+        <td>@activities.Description</td>
+        <td>@activities.UrlLocation</td>
+
+    </tr>
         }
     </table>
 }

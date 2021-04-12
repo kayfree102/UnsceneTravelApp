@@ -1,3 +1,49 @@
-﻿@page
+﻿@model List<UnsceneTravelApp.Models.Activities>
 @{
+}
+<h1> My Activities</h1>
+<p>
+    <a asp-controller="Activities" asp-action="Add">Add Activity</a>
+</p>
+<p>
+    <a asp-controller="Activities" asp-action="Delete">Delete Activity</a>
+</p>
+
+@if (Model.Count == 0)
+{
+    <p>You haven't added any activities yet!</p>
+}
+else
+{
+    <table class="table">
+        <tr>
+            @*<th>
+                    Id
+                </th>*@
+            <th>
+                Name
+            </th>
+            <th>
+                Location
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                URL Map Location
+            </th>
+
+        </tr>
+        @foreach (var activities in Model)
+        {
+            <tr>
+                @*<td>@activities.Id</td>*@
+                <td>@activities.Name</td>
+                <td>@activities.Location</td>
+                <td>@activities.Description</td>
+                <td>@activities.UrlLocation</td>
+
+            </tr>
+        }
+    </table>
 }

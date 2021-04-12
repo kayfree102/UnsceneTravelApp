@@ -88,5 +88,26 @@ namespace UnsceneTravelApp.Controllers
 
             return Redirect("/Activities");
     }
+        [Authorize]
+        public IActionResult MyActivities()
+        {
+            var currentUserId = userManager.GetUserId(User);
+            List<Activities> activities = context.Activities
+                .Where(e => e.UserId == currentUserId)
+                .ToList();
+
+            return View(activities);
+        }
+
+        public IActionResult Detail(int id)
+        {
+            Activities theActivity = context.Activities
+                .Single(e => e.Id == id);
+
+
+            ActivitiesDetailViewModel viewModel = new ActivitiesDetailViewModel(theActivity);
+            return View(viewModel);
+        }
     }
+
 }
