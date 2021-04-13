@@ -38,10 +38,10 @@ else
         {
             <tr>
                 @*<td>@activities.Id</td>*@
-                <td>@activities.Name</td>
+                <td><a asp-controller="Activities" asp-action="Detail" asp-route-id="@activities.Id">@activities.Name</a></td>
                 <td>@activities.Location</td>
                 <td>@activities.Description</td>
-                <td>@activities.UrlLocation</td>
+                <td><a target="_blank" href="@activities.UrlLocation"> View on Google Maps</a></td>
 
             </tr>
         }
