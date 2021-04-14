@@ -16,12 +16,13 @@ namespace UnsceneTravelApp.Models
         {
         }
 
-        public Activities(string name, string location, string description, string urlLocation)
+        public Activities(string name, string location, string description, string urlLocation, int id)
         {
             Name = name;
             Location = location;
             Description = description;
             UrlLocation = urlLocation;
+            Id = id;
         }
     }
 }

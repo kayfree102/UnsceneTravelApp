@@ -32,6 +32,7 @@ else
             <th>
                 URL Map Location
             </th>
+            
 
         </tr>
         @foreach (Activities activities in Model)
@@ -42,7 +43,8 @@ else
         @* <td>@activities.Name</td> *@
         <td>@activities.Location</td>
         <td>@activities.Description</td>
-        <td><a target ="_blank" href="@activities.UrlLocation"> View on Google Maps</a></td>
+        <td><a target="_blank" href="@activities.UrlLocation"> View on Google Maps</a></td>
+        
         @*<td>@activities.UrlLocation</td>*@
 
     </tr>

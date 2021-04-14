@@ -1,4 +1,5 @@
 ﻿@model UnsceneTravelApp.ViewModels.ActivitiesDetailViewModel
+@using UnsceneTravelApp.Models
 
 
 <h1> @Model.Name</h1>
@@ -20,5 +21,11 @@
         <th>UrlLocation</th>
         <td><a target="_blank" href="@Model.UrlLocation">View on Google Maps</a></td>
     </tr>
+    
 
 </table>
+
+
+    <p>
+        <a asp-controller="Activities" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    </p>

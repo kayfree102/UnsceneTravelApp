@@ -18,6 +18,7 @@ namespace UnsceneTravelApp.ViewModels
             Location = theActivity.Location;
             Description = theActivity.Description;
             UrlLocation = theActivity.UrlLocation;
+            Id = theActivity.Id;
 
         }
     }

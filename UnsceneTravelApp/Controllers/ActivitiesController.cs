@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -64,7 +65,8 @@ namespace UnsceneTravelApp.Controllers
             }
             return View(addActivitiesViewModel);
         }
-        [Authorize]
+
+            [Authorize]
         public IActionResult Delete()
         {
             var currentUserId = userManager.GetUserId(User);
@@ -87,7 +89,50 @@ namespace UnsceneTravelApp.Controllers
             context.SaveChanges();
 
             return Redirect("/Activities");
-    }
+        }
+
+        [Authorize]
+        public ViewResult Edit(int id)
+        {
+            var currentUserId = userManager.GetUserId(User);
+            Activities activities = context.Activities.Find(id);
+            ActivitiesEditViewModel activitiesEditViewModel = new ActivitiesEditViewModel
+            {
+                
+                Name = activities.Name,
+                Location = activities.Location,
+                Description = activities.Description,
+                UrlLocation = activities.UrlLocation,
+                Id = activities.Id,
+            };
+
+            return View(activitiesEditViewModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Edit(ActivitiesEditViewModel activitiesEditViewModel)
+        {
+            
+            if (ModelState.IsValid)
+            {
+                var currentUserId = userManager.GetUserId(User);
+                Activities activities = context.Activities.Find(activitiesEditViewModel.Id);
+                activities.Name = activitiesEditViewModel.Name;
+                activities.Location = activitiesEditViewModel.Location;
+                activities.Description = activitiesEditViewModel.Description;
+                activities.UrlLocation = activitiesEditViewModel.UrlLocation;
+
+                context.Activities.Update(activities);
+                context.SaveChanges();
+
+                return RedirectToAction("Detail", new { id = activities.Id });
+            }
+            return View(activitiesEditViewModel);
+        }
+        
+
+
         [Authorize]
         public IActionResult MyActivities()
         {
@@ -98,6 +143,8 @@ namespace UnsceneTravelApp.Controllers
 
             return View(activities);
         }
+
+    
 
         public IActionResult Detail(int id)
         {

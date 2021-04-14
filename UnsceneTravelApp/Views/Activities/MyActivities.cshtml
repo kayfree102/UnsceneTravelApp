@@ -18,8 +18,8 @@ else
     <table class="table">
         <tr>
             @*<th>
-                    Id
-                </th>*@
+            Id
+        </th>*@
             <th>
                 Name
             </th>
@@ -32,18 +32,22 @@ else
             <th>
                 URL Map Location
             </th>
+            <th>
+                Modify
+            </th>
 
         </tr>
         @foreach (var activities in Model)
         {
-            <tr>
-                @*<td>@activities.Id</td>*@
-                <td><a asp-controller="Activities" asp-action="Detail" asp-route-id="@activities.Id">@activities.Name</a></td>
-                <td>@activities.Location</td>
-                <td>@activities.Description</td>
-                <td><a target="_blank" href="@activities.UrlLocation"> View on Google Maps</a></td>
+    <tr>
+        @*<td>@activities.Id</td>*@
+        <td><a asp-controller="Activities" asp-action="Detail" asp-route-id="@activities.Id">@activities.Name</a></td>
+        <td>@activities.Location</td>
+        <td>@activities.Description</td>
+        <td><a target="_blank" href="@activities.UrlLocation"> View on Google Maps</a></td>
+        <td><a asp-controller="Activities" asp-action="Edit" asp-route-id="@activities.Id">Edit</a></td>
 
-            </tr>
+    </tr>
         }
     </table>
 }
